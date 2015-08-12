@@ -1,55 +1,29 @@
-## smart urls
-autoload -U url-quote-magic
-zle -N self-insert url-quote-magic
-
-## file rename magick
-autoload -U zmv
-bindkey "^[m" copy-prev-shell-word
+## Load smart urls if available
+for d in $fpath; do
+	if [[ -e "$d/url-quote-magic" ]]; then
+		autoload -U url-quote-magic
+		zle -N self-insert url-quote-magic
+	fi
+done
 
 ## jobs
 setopt long_list_jobs
 
 ## pager
-export PAGER='less -R'
-export LC_CTYPE=$LANG
+export PAGER="less"
+export LESS="-R"
 
-## pretty man pages
-function pman() {
-    man $1 -t | open -f -a Preview
-}
-#
-## pretty JSON
-function pj() {
-    python -mjson.tool
-}
+## super user alias
+alias _='sudo'
+alias please='sudo'
 
-## Open current directory
-alias oo='open .'
+## more intelligent acking for ubuntu users
+alias afind='ack-grep -il'
 
-## Quick-look a file (^C to close)
-alias ql='qlmanage -p 2>/dev/null'
+# only define LC_CTYPE if undefined
+if [[ -z "$LC_CTYPE" && -z "$LC_ALL" ]]; then
+	export LC_CTYPE=${LANG%%:*} # pick the first entry from LANG
+fi
 
-## Start a local SMTP server and dump emails sent to it to the console
-alias smtpconsole='python -m smtpd -n -c DebuggingServer localhost:1025'
-
-## Serve the current folder on port 80
-alias serve_this='python -m SimpleHTTPServer'
-
-## Highlight-aware less command
-alias hl='less -R'
-
-## Show history
-alias history='fc -l 1'
-
-## Color grep results
-## Examples: http://rubyurl.com/ZXv
-export GREP_OPTIONS='--color=auto'
-export GREP_COLOR='1;32'
-
-# Quick and dirty encryption
-function encrypt() {
-    openssl des3 -a -in $1 -out $1.des3
-}
-function decrypt() {
-    openssl des3 -d -a -in $1 -out ${1%.des3}
-}
+# recognize comments
+setopt interactivecomments

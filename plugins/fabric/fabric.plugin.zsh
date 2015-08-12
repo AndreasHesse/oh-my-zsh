@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!zsh
 # 
 # Installation
@@ -17,3 +18,6 @@ _fab_list() {
 }
 compctl -K _fab_list fab
 
+=======
+# DECLARION: This plugin was created by vhbit. What I did is just making a portal from https://github.com/vhbit/fabric-zsh-autocomplete.
+>>>>>>> 3d5b3430fd9da12f6e33f534e487fe9b18928ac7
