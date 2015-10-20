@@ -1,5 +1,3 @@
-# assign ips to vpn until we can connect with hostnames
-
 function makeconfig(){
 	echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
 	if [ $? -eq 0 ]; then
@@ -91,7 +89,6 @@ function mountvpn(){
 	    echo "no vpn"
 	fi
 }
-
 
 #ssid=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}')
 #echo wifi:$ssid
